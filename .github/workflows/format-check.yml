@@ -11,9 +11,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Get latest movefmt release version
+        id: get_release
+        run: |
+          LATEST=$(curl -s https://api.github.com/repos/movebit/movefmt/releases/latest | jq -r '.tag_name')
+          echo "version=$LATEST" >> $GITHUB_OUTPUT
+
       - name: Download movefmt binary
         run: |
-          curl -L https://github.com/movebit/movefmt-CI/releases/download/v0.0.1/movefmt-for-ci2 -o movefmt
+          curl -L https://github.com/movebit/movefmt/releases/download/${{ steps.get_release.outputs.version }}/movefmt.beta.${{ steps.get_release.outputs.version }}-x86_64-unknown-linux-gnu -o movefmt
           chmod +x movefmt
 
       - name: Run movefmt diff check
