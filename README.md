@@ -16,15 +16,14 @@ name: MoveFmt CI
 
 on:
   push:
-    branches: [main]
+    branches: [your_branch_name]
   pull_request:
-    branches: [main]
+    branches: [your_branch_name]
+
 
 jobs:
   format-check:
     uses: movebit/movefmt-workflow/.github/workflows/format-check.yml@main
-    with:
-      path: "."  # optional: directory to check format in
 ```
 
 ### 2. What it does
