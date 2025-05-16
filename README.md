@@ -29,7 +29,7 @@ jobs:
 ### 2. What it does
 - Checks out your repo
 - Downloads the `movefmt` binary
-- Runs `movefmt --emit=\"diff\"` to check formatting
+- Runs `movefmt --emit="diff"` to check formatting
 
 If any files are not correctly formatted, the CI will fail and show the diff.
 
@@ -41,5 +41,4 @@ If any files are not correctly formatted, the CI will fail and show the diff.
 
 ## 🔧 Customization
 You can customize:
-- `ref`: the git ref to checkout
-- `path`: which directory to run `movefmt` in (default is `.`)
+- Create `movefmt.toml` in root dir for your repo to customize formatting config
