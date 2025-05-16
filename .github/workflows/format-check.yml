@@ -1,0 +1,89 @@
+## 📁 movefmt-workflow
+
+### 📄 .github/workflows/format-check.yml
+
+```yaml
+name: MoveFmt Format Check
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "Git ref to check out"
+        required: false
+        default: "HEAD"
+      path:
+        description: "Directory to run movefmt in"
+        required: false
+        default: "."
+
+jobs:
+  movefmt-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Download movefmt binary
+        run: |
+          curl -L https://github.com/movebit/movefmt-CI/releases/download/v0.0.1/movefmt-for-ci2 -o movefmt
+          chmod +x movefmt
+
+      - name: Run movefmt diff check
+        run: ./movefmt --emit="diff"
+        working-directory: ${{ inputs.path }}
+```
+
+### 📄 README.md
+
+```md
+# 🧪 MoveFmt Workflow
+
+A reusable GitHub Action workflow for checking formatting of Move projects using `movefmt`.
+
+## ✅ Usage
+
+To use this workflow in your Move project:
+
+### 1. Create a `.github/workflows/format.yml` file in your project:
+
+```yaml
+name: MoveFmt CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  format-check:
+    uses: movebit/movefmt-workflow/.github/workflows/format-check.yml@main
+    with:
+      path: "."  # optional: directory to check format in
+```
+
+### 2. What it does
+- Checks out your repo
+- Downloads the `movefmt` binary
+- Runs `movefmt --emit=\"diff\"` to check formatting
+
+If any files are not correctly formatted, the CI will fail and show the diff.
+
+---
+
+## 📦 Requirements
+- Your Move project should be compatible with `movefmt`
+- Ensure the formatting rules are correctly configured in your repo
+
+## 🔧 Customization
+You can customize:
+- `ref`: the git ref to checkout
+- `path`: which directory to run `movefmt` in (default is `.`)
+
+---
+
+Made with ❤️ by the MoveBit team.
