@@ -19,7 +19,7 @@ jobs:
 
       - name: Download movefmt binary
         run: |
-          curl -L https://github.com/movebit/movefmt/releases/download/${{ steps.get_release.outputs.version }}/movefmt.beta.${{ steps.get_release.outputs.version }}-x86_64-unknown-linux-gnu -o movefmt
+          curl -L https://github.com/movebit/movefmt/releases/download/${{ steps.get_release.outputs.version }}/movefmt.${{ steps.get_release.outputs.version }}-x86_64-unknown-linux-gnu -o movefmt
           chmod +x movefmt
 
       - name: Run movefmt diff check
